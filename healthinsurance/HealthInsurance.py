@@ -5,13 +5,13 @@ import numpy as np
 class HealthInsurance:
     
     def __init__(self):
-        self.home_path = '/home/laflamebr/Documentos/repos/pa004_health_insurance_cross_sell/'
-        self.annual_premium_scaler =                                 pickle.load(open(self.home_path + 'src/features/annual_premium_scaler.pkl'))
-        self.age_scaler =                                            pickle.load(open(self.home_path + 'src/features/age_scaler.pkl'))
-        self.vintage_scaler =                                        pickle.load(open(self.home_path + 'src/features/vintage_scaler.pkl'))
-        self.target_encoder_gender_scaler =                          pickle.load(open(self.home_path + 'src/features/target_encoder_gender_scaler.pkl'))
-        self.target_encoder_region_code_scaler =                     pickle.load(open(self.home_path + 'src/features/target_encoder_region_code_scaler.pkl'))
-        self.fe_policy_sales_channel_scaler =                        pickle.load(open(self.home_path + 'src/features/fe_policy_sales_channel_scaler.pkl'))       
+        self.home_path = ''
+        self.annual_premium_scaler =                                 pickle.load(open(self.home_path + 'paramater/annual_premium_scaler.pkl'))
+        self.age_scaler =                                            pickle.load(open(self.home_path + 'paramater/age_scaler.pkl'))
+        self.vintage_scaler =                                        pickle.load(open(self.home_path + 'paramater/vintage_scaler.pkl'))
+        self.target_encoder_gender_scaler =                          pickle.load(open(self.home_path + 'paramater/target_encoder_gender_scaler.pkl'))
+        self.target_encoder_region_code_scaler =                     pickle.load(open(self.home_path + 'paramater/target_encoder_region_code_scaler.pkl'))
+        self.fe_policy_sales_channel_scaler =                        pickle.load(open(self.home_path + 'paramater/fe_policy_sales_channel_scaler.pkl'))       
         
     def data_cleaning(data):
         cols_new = ['id', 'gender', 'age', 'driving_license', 'region_code', 'previously_insured', 'vehicle_age', 'vehicle_damage', 'annual_premium',

@@ -1,6 +1,7 @@
 import pickle
 import pandas as pd
 import os
+import pipeline
 from flask import Flask, request, Response
 
 from healthinsurance.HealthInsurance import HealthInsurance
@@ -11,7 +12,7 @@ model = pickle.load( open('model/model_linear_regression.pkl', 'rb' ) )
 # initialize API
 app = Flask( __name__ )
 
-@app.route( '/healthinsurance/predict', methods=['POST'] )
+@app.route( '/predict', methods=['POST'] )
 
 def health_insurance_predict():
     test_json = request.get_json()
@@ -26,17 +27,14 @@ def health_insurance_predict():
         # Instantiate Rossmann class
         pipeline = HealthInsurance()
         
-        # data cleaning
-        df1 = pipeline.data_cleaning( test_raw )
+        # copy the original data
+        df_raw = test_raw.copy()
         
-        # feature engineering
-        df2 = pipeline.feature_engineering( df1 )
-        
-        # data preparation
-        df3 = pipeline.data_preparation( df2 )
+        # data for prediction
+        df_test = df_raw.drop(columns=['id'])
         
         # prediction
-        df_response = pipeline.get_prediction( model, test_raw, df3 )
+        df_response = pipeline.get_prediction( model, df_raw, df_test)
         
         return df_response
     

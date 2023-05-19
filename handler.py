@@ -27,14 +27,17 @@ def health_insurance_predict():
         # Instantiate Rossmann class
         pipeline = HealthInsurance()
         
-        # copy the original data
-        df_raw = test_raw.copy()
+        # data cleaning
+        df1 = pipeline.data_cleaning( test_raw )
         
-        # data for prediction
-        df_test = df_raw.drop(columns=['id'])
+        # feature engineering
+        df2 = pipeline.feature_engineering( df1 )
+        
+        # data preparation
+        df3 = pipeline.data_preparation( df2 )
         
         # prediction
-        df_response = pipeline.get_prediction( model, df_raw, df_test)
+        df_response = pipeline.get_prediction( model, test_raw, df3 )
         
         return df_response
     
@@ -42,5 +45,4 @@ def health_insurance_predict():
         return Response( '{}', status=200, mimetype='application/json' )
     
 if __name__ == '__main__':
-    port = os.environ.get('PORT', 5000 )
-    app.run( host = '0.0.0.0', port=port )
+    app.run( '0.0.0.0', debug=True )

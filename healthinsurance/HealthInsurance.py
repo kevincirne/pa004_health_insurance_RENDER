@@ -1,9 +1,7 @@
 import pickle
 import pandas as pd
 import numpy as np
-
-class HealthInsurance:
-    
+class HealthInsurance (object): 
     def __init__(self):
         self.home_path = ''
         self.annual_premium_scaler =                                 pickle.load(open(self.home_path + 'paramater/annual_premium_scaler.pkl', 'rb'))
@@ -13,7 +11,7 @@ class HealthInsurance:
         self.target_encoder_region_code_scaler =                     pickle.load(open(self.home_path + 'paramater/target_encoder_region_code_scaler.pkl', 'rb'))
         self.fe_policy_sales_channel_scaler =                        pickle.load(open(self.home_path + 'paramater/fe_policy_sales_channel_scaler.pkl', 'rb'))       
         
-    def data_cleaning(self, data):
+    def data_cleaning (self, data):
         cols_new = ['id', 'gender', 'age', 'driving_license', 'region_code', 'previously_insured', 'vehicle_age', 'vehicle_damage', 'annual_premium',
        'policy_sales_channel', 'vintage', 'response']
         
@@ -21,7 +19,7 @@ class HealthInsurance:
         
         return data
     
-    def feature_engineering(self, data):
+    def feature_engineering (self, data):
         data['vehicle_age'] = data['vehicle_age'].apply(lambda x: 'over_2_years' if x == '> 2 Years' else 'between_1_2_years' if x == '1-2 Year' else 'below_1_year')
 
         data['vehicle_damage'] = data['vehicle_damage'].apply(lambda x: 1 if x == 'Yes' else 0)
@@ -51,8 +49,7 @@ class HealthInsurance:
         data.loc[:, 'policy_sales_channel'] = data['policy_sales_channel'].map(self.fe_policy_sales_channel_scaler)
         
         # Feature Selection
-        cols_selected = ['annual_premium', 'vintage', 'age', 'region_code', 'vehicle_damage', 'previously_insured',
-                 'policy_sales_channel']
+        cols_selected = ['annual_premium', 'vintage', 'age', 'region_code', 'vehicle_damage', 'previously_insured', 'policy_sales_channel']
         
         return data[cols_selected]
     
